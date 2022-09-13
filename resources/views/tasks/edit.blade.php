@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>id:{{ $task->id }} 編集画面</h1>
+    <h1>id:{{ $task->id }}編集画面</h1>
 
     <div class="row">
         <div class="col-6">
