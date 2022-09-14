@@ -2,6 +2,9 @@
 
 @section('content')
 
+
+
+
     <h1>id:{{ $task->id }}編集画面</h1>
 
     <div class="row">
@@ -9,7 +12,7 @@
             {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
 
                 <div class="form-group">
-                    {!! Form::label('status', 'タイトル:') !!}
+                    {!! Form::label('status', 'ステータス:') !!}
                     {!! Form::text('status', null, ['class' => 'form-control']) !!}
                 </div>
 
