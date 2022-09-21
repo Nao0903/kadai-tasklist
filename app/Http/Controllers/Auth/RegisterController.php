@@ -47,6 +47,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+     
+     //ユーザ登録の際のフォームデータのバリデーション
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -62,6 +64,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+     
+     //Userを新規作成しているメソッド=create
     protected function create(array $data)
     {
         return User::create([

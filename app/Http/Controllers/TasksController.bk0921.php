@@ -14,24 +14,15 @@ class TasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     // getでtasks/にアクセスされた場合の「一覧表示処理」
-        public function index()
+    public function index()
     {
-        $data = [];
-        if (\Auth::check()) { // 認証済みの場合
-            // 認証済みユーザを取得
-            $user = \Auth::user();
-            // ユーザの投稿の一覧を作成日時の降順で取得
-            // （後のChapterで他ユーザの投稿も取得するように変更しますが、現時点ではこのユーザの投稿のみ取得します）
-            $tasks = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
-
-            $data = [
-                'user' => $user,
-                'tasks' => $tasks,
-            ];
-        }
-
-        // Welcomeビューでそれらを表示
-        return view('welcome', $data);
+        //task一覧を取得
+        $tasks = Task::all();
+        
+        //メッセージ一覧ビューでそれを表示
+        return view('tasks.index',[
+            'tasks' => $tasks,
+        ]);
     }
 
     /**
@@ -66,20 +57,11 @@ class TasksController extends Controller
             'content' => 'required',
         ]);
         
-        // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
-        
-        //Laravelのcreateメソッドを使用している。
-        /*省略...->create([
-            どのカラムに => 何を保存するか
-            ]);
-        */
-        $request->user()->tasks()->create([
         //タスクを作成
-        'status' => $request->status,
-        'content'=> $request->content,
-        ]);
-        
-        
+        $task = new Task;
+        $task->status = $request->status;
+        $task->content = $request->content;
+        $task->save();
         
         //トップページへダイレクトさせる
         return redirect('/');
@@ -157,9 +139,6 @@ class TasksController extends Controller
     // deleteでtasks/（任意のid）にアクセスされた場合の「削除処理」 
     public function destroy($id)
     {
-        
-
-        
         //idの値でタスクを検索して取得
         $task = Task::findOrFail($id);
         //タスクを削除

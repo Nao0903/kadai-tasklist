@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    
+    /**
+     * このユーザが所有する投稿。（ Micropostモデルとの関係を定義）
+     */
+     
+     //ユーザーのタクスは複数存在する為、複数系で記載する。
+     //「Task」モデルを参照すること
+    public function tasks()
+    {
+        //一対多の関係
+        return $this->hasMany(Task::class);
+    }
+    
+    
+    
 }
